@@ -1,0 +1,5 @@
+name: 'Cucumber'
+type: 'module'
+core: '8.x'
+description: 'A module for training a pronunciation of the word "cucumber".'
+package: 'Custom'

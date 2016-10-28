@@ -1,0 +1,15 @@
+cucumber.content:
+  path: '/cucumber'
+  defaults:
+    _controller: '\Drupal\cucumber\Controller\CucumberController::content'
+    _title: 'Cucumber'
+  requirements:
+    _permission: 'access content'
+
+cucumber.form:
+  path: '/admin/config/development/cucumber'
+  defaults:
+    _form: 'Drupal\cucumber\Form\CucumberForm'
+    _title: 'Cucumber settings'
+  requirements:
+    _permission: 'administer site configuration'
