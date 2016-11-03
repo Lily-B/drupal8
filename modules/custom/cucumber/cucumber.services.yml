@@ -1,0 +1,9 @@
+services:
+  cucumber.entity.manager:
+    class: Drupal\cucumber\CucumberWorldLog
+    decorates: entity.manager
+    arguments: ['@cucumber.entity.manager.inner']
+  cucumber2.entity.manager:
+    class: Drupal\cucumber\CucumberHelloLog
+    decorates: cucumber.entity.manager
+    arguments: ['@cucumber2.entity.manager.inner']

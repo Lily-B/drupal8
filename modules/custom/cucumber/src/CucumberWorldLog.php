@@ -1,15 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: root
- * Date: 01.11.16
- * Time: 16:17
- */
 
 namespace Drupal\cucumber;
-
-
-use Drupal\cucumber\CucumberEntityDecorator;
 
 /**
  * Class CucumberWorldLog.
@@ -21,10 +12,11 @@ class CucumberWorldLog extends CucumberEntityDecorator {
   /**
    * {@inheritdoc}
    */
-  public function log() {
+  public function clearCachedDefinitions() {
 
-    echo $this->entity_manager->log() . " World!";
+    echo "*****Word!***** (from 1 decorator!)\r\n";
 
+    $this->entityManager->clearCachedDefinitions();
   }
 
 }

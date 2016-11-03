@@ -1,14 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: root
- * Date: 01.11.16
- * Time: 16:13
- */
 
 namespace Drupal\cucumber;
-
-use Drupal\cucumber\CucumberEntityDecorator;
 
 /**
  * Class CucumberHelloLog.
@@ -19,10 +11,14 @@ class CucumberHelloLog extends CucumberEntityDecorator {
 
   /**
    * {@inheritdoc}
+   *
+   * @deprecated in Drupal 8.0.0, will be removed before Drupal 9.0.0.
    */
-  public function log() {
+  public function clearCachedDefinitions() {
 
-    echo $this->entity_manager->log() . " Hello!";
+    echo "*****Hello***** (from 2 decorator!)\r\n";
+
+    $this->entityManager->clearCachedDefinitions();
 
   }
 
