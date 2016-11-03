@@ -1,0 +1,5 @@
+# Schema for the configuration files of the November theme.
+
+november.settings:
+  type: theme_settings
+  label: 'November settings'
