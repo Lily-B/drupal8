@@ -1,0 +1,6 @@
+novemberlibrary:
+  version: VERSION
+  js:
+    js/log.js: {}
+  dependencies:
+     - core/jquery
