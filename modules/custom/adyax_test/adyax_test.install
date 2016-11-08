@@ -80,3 +80,45 @@ function adyax_test_uninstall() {
   Vocabulary::load('brands')->delete();
 
 }
+
+/**
+ * Implements hook_update_N().
+ *
+ * Adds field in entity adyax_test.
+ */
+function adyax_test_update_8001() {
+  \Drupal::entityDefinitionUpdateManager()->applyUpdates();
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Changes field in entity adyax_test.
+ */
+function adyax_test_update_8004() {
+
+  $query = \Drupal::database()->update('adyax_test');
+  $query->isNull('date');
+  $query->fields([
+    'date' => time() - 30 * 24 * 60 * 60,
+  ]);
+//  $query->condition('date', (time() - 10 * 24 * 60 * 60), '<');
+  $query->execute();
+
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Changes field in entity adyax_test.
+ */
+function adyax_test_update_8005() {
+
+  $query = \Drupal::database()->update('adyax_test');
+  $query->fields([
+    'date' => time(),
+  ]);
+  $query->condition('date', (time() - 10 * 24 * 60 * 60), '<');
+  $query->execute();
+
+}

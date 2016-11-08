@@ -261,6 +261,26 @@ class AdyaxTest extends ContentEntityBase implements AdyaxTestInterface {
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
 
+    // New field added in hook_update_8001.
+    $fields['date'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Date'))
+      ->setDescription(t('The date extrafield.'))
+      ->setSettings(array(
+        'default_value' => time(),
+      ))
+//      ->setRequired(TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'date',
+        'weight' => -2,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'date',
+        'weight' => -2,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     return $fields;
   }
 
