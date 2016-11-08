@@ -1,0 +1,12 @@
+# Define the menu links for this module
+
+entity.adyax_test.collection:
+  title: 'Adyax_test Entity Example: Adyax_test Listing'
+  route_name: entity.adyax_test.collection
+  description: 'List Adyax_test'
+  weight: 10
+adyax_test.admin.structure.settings:
+  title: Adyax_test Settings
+  description: 'Configure Adyax_test entity'
+  route_name:  adyax_test.adyax_test_settings
+  parent: system.admin_structure

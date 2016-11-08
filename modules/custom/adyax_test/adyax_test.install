@@ -1,0 +1,82 @@
+<?php
+/**
+ * @file
+ * File.
+ */
+
+use \Drupal\adyax_test\Entity\AdyaxTest;
+use \Drupal\taxonomy\Entity\Term;
+use \Drupal\taxonomy\Entity\Vocabulary;
+
+
+/**
+ * Implements hook_install().
+ */
+function adyax_test_install() {
+  $vid = 'brands';
+  $vocabulary_name = 'Brands';
+  $brands = ['google', 'facebook', 'toyota', 'microsoft'];
+
+  $number_of_entities = 5;
+  $counter = 0;
+  $names = [
+    'Mary',
+    'Michael',
+    'Ted',
+    'Bob',
+    'Ben',
+    'Ann',
+  ];
+
+
+  $vocabulary = Vocabulary::create(array(
+    'vid' => $vid,
+    'machine_name' => $vid,
+    'name' => $vocabulary_name,
+  ));
+  $vocabulary->save();
+  foreach ($brands as $brand) {
+    Term::create(array(
+      'parent' => array(),
+      'name' => $brand,
+      'vid' => $vid,
+    ))->save();
+  }
+
+  $terms = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadTree($vid);
+  foreach ($terms as $term) {
+    $voc[] = $term->tid;
+  }
+
+  while ($counter < $number_of_entities) {
+    $new_entity = AdyaxTest::create([
+      'client_name' => $names[rand(0, (count($names) - 1))],
+      'products_owned_count' => rand(0, 10),
+      'prefered_brand' => [$voc[rand(0, (count($voc) - 1))]],
+    ]);
+    $new_entity->setOwnerId(1)
+      ->enforceIsNew()
+      ->save();
+    $counter++;
+  }
+
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function adyax_test_uninstall() {
+
+  $tids = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', 'brands')
+    ->execute();
+
+  $controller = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+  $terms = $controller->loadMultiple($tids);
+  $controller->delete($terms);
+
+  Vocabulary::load('brands')->delete();
+
+}

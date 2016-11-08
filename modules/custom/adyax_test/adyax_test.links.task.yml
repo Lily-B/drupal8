@@ -1,0 +1,22 @@
+# Define the 'local' links for the module
+
+adyax_test.settings_tab:
+  route_name: adyax_test.adyax_test_settings
+  title: Settings
+  base_route: adyax_test.adyax_test_settings
+
+adyax_test.view:
+  route_name: entity.adyax_test.canonical
+  base_route: entity.adyax_test.canonical
+  title: View
+
+adyax_test.page_edit:
+  route_name: entity.adyax_test.edit_form
+  base_route: entity.adyax_test.canonical
+  title: Edit
+
+adyax_test.delete_confirm:
+  route_name:  entity.adyax_test.delete_form
+  base_route:  entity.adyax_test.canonical
+  title: Delete
+  weight: 10
