@@ -19,16 +19,15 @@ class PathProcessorEndless implements InboundPathProcessorInterface {
   public function processInbound($path, Request $request) {
 
 //    if (strpos($path, '/endless/') === 0 && !$request->query->has('endless_parameter')) {
-    if (strpos($path, '/endless/') === 0) {
+    if (strpos($path, '/endless') === 0) {
 
 
-      $endless_arg = preg_replace('|^\/endless\/|', '', $path);
-//      $request->query->set('endless_parameter', $endless_arg);
+      $endless_arg = preg_replace('|^\/endless|', '', $path);
+      $request->query->set('endless_parameter', $endless_arg);
 
-      $endless_arg = preg_replace('|\/|', 'ъ', $endless_arg);
 
-      $result = '/endless/' . $endless_arg;
-
+      $result = '/endless';
+//kint($request);exit();
       return $result;
     }
 

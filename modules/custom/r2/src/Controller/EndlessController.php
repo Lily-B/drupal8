@@ -15,16 +15,40 @@ class EndlessController extends ControllerBase {
   /**
    * {@inheritdoc}
    */
-  public function extralong($endless = "") {
-//    kint($endless); exit();
+  public function extraLong() {
 
-    $arr = explode('ъ', $endless);
+    $arguments = $this->getQueryParameter('endless_parameter');
+
+
+    $arguments = preg_replace('|^\/|', '', $arguments);
+
+
+    $arguments = explode('/', $arguments);
+    $output = '';
+    $n = 1;
+    foreach ($arguments as $argument) {
+      $output .= "Argument #" . $n . ": " . $argument . "<br>";
+      $n++;
+    }
 
     $build = array(
       '#type' => 'markup',
-      '#markup' => "URL: " . implode(', ', $arr),
+      '#markup' => "URL arguments: <br>" . $output,
     );
     return $build;
+  }
+
+  /**
+   * @param string $parameter
+   *    The name of parameter in current request's query.
+   * @return mixed
+   *    Returns string with endless number of arguments.
+   */
+  private function getQueryParameter($parameter) {
+
+    $query = \Drupal::request()->query;
+    $parameter = $query->get('endless_parameter');
+    return $parameter;
   }
 
 }

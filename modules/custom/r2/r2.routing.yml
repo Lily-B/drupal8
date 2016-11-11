@@ -1,7 +1,7 @@
 r2.endless:
-  path: '/endless/{endless}'
+  path: '/endless'
   defaults:
-    _controller: 'Drupal\r2\Controller\EndlessController::extralong'
+    _controller: 'Drupal\r2\Controller\EndlessController::extraLong'
   requirements:
     _access: 'TRUE'
-    endless: ^[0-9a-zA-Z_ъ]+
+#    endless: ^[0-9a-zA-Z_ъ]+
