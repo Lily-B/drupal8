@@ -1,0 +1,5 @@
+name: 'Routing'
+type: 'module'
+core: '8.x'
+description: 'A module for routing.'
+package: 'Custom'

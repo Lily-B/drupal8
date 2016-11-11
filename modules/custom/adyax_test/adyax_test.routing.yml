@@ -20,7 +20,8 @@ entity.adyax_test.collection:
     _title: 'Adyax_test List'
   requirements:
   # Checks for permission directly.
-    _permission: 'view adyax_test entity'
+#    _permission: 'view adyax_test entity'
+      _access: 'TRUE'
 
 adyax_test.adyax_test_add:
   path: '/adyax_test/add'

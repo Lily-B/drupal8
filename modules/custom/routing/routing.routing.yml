@@ -1,0 +1,20 @@
+
+#routing.term:
+#  path: '/taxonomy/term/{term_id}'
+#  defaults:
+#    _controller: '\Drupal\routing\Controller\RoutingController::term'
+#    _title: 'Hello World'
+#  requirements:
+#    _permission: 'access content'
+#    term_id: ^[0-9]+
+#    options:
+#      parameters:
+#        term_id:
+#          type: entity:term
+
+#routing.theme:
+#  path: '/user/login'
+#  requirements:
+#      _access: 'TRUE'
+#  options:
+#    _admin_route: 'TRUE'

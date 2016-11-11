@@ -265,10 +265,10 @@ class AdyaxTest extends ContentEntityBase implements AdyaxTestInterface {
     $fields['date'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Date'))
       ->setDescription(t('The date extrafield.'))
+      ->setDefaultValue(time())
       ->setSettings(array(
         'default_value' => time(),
       ))
-//      ->setRequired(TRUE)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'date',
