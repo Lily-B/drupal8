@@ -20,8 +20,6 @@ abstract class ConditionalFieldBase extends JavascriptTestBase {
     'datetime',
     'field_ui',
     'taxonomy',
-    // Install vocabulary for testing:
-    'conditional_fields_vocabulary',
   ];
 
   /**
@@ -77,6 +75,13 @@ abstract class ConditionalFieldBase extends JavascriptTestBase {
    */
   protected function changeField($selector, $value = '') {
     $this->getSession()->executeScript("jQuery('" . $selector . "').val('" . $value . "').trigger('keyup').trigger('change');");
+  }
+
+  /**
+   * Helper to change selection with Javascript.
+   */
+  protected function changeSelect($selector, $value = '') {
+    $this->getSession()->executeScript("jQuery('" . $selector . "').val('" . $value . "').trigger('click').trigger('change');");
   }
 
 }
