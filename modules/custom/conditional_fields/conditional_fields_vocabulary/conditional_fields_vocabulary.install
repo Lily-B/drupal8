@@ -1,0 +1,50 @@
+<?php
+/**
+ * @file
+ * Install and uninstall functions for conditional_fields_vocabulary module.
+ */
+
+use \Drupal\taxonomy\Entity\Term;
+use \Drupal\taxonomy\Entity\Vocabulary;
+
+/**
+ * Implements hook_install().
+ */
+function conditional_fields_vocabulary_install() {
+  $vid = 'fruits_voc';
+  $vocabulary_name = 'Fruits Voc';
+  $fruits = ['apple', 'banana'];
+
+
+  $vocabulary = Vocabulary::create([
+    'vid' => $vid,
+    'machine_name' => $vid,
+    'name' => $vocabulary_name,
+  ]);
+  $vocabulary->save();
+  foreach ($fruits as $fruit) {
+    Term::create([
+      'parent' => [],
+      'name' => $fruit,
+      'vid' => $vid,
+    ])->save();
+  }
+
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function conditional_fields_vocabulary_uninstall() {
+
+  $tids = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', 'fruits_voc')
+    ->execute();
+
+  $controller = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+  $terms = $controller->loadMultiple($tids);
+  $controller->delete($terms);
+
+  Vocabulary::load('fruits_voc')->delete();
+
+}
