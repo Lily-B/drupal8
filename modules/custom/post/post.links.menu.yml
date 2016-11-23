@@ -1,0 +1,4 @@
+post.menu_item:
+  title: 'Request sender'
+  route_name: post.send
+  parent: main

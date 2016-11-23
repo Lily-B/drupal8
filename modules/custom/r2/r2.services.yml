@@ -1,5 +1,5 @@
 services:
   path_processor.endless:
-    class: Drupal\r2\PathProcessor\PathProcessorEndless
+    class: Drupal\r2\PathProcessor\EndlessPathProcessor
     tags:
       - { name: path_processor_inbound, priority: 300 }

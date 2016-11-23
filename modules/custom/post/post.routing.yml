@@ -1,0 +1,16 @@
+post.receive:
+  path: '/request/receive'
+  defaults:
+    _controller: '\Drupal\post\Controller\PostController::requestReceiver'
+    _title: 'Receiver'
+  requirements:
+    _permission: 'access content'
+
+post.send:
+  path: '/request/send'
+  defaults:
+    _controller: '\Drupal\post\Controller\PostController::requestSender'
+    _title: 'Sender'
+  requirements:
+    _permission: 'access content'
+

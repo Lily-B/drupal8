@@ -3,7 +3,9 @@
 namespace Drupal\r2\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class EndlessController.
@@ -17,7 +19,8 @@ class EndlessController extends ControllerBase {
    */
   public function extraLong() {
 
-    $arguments = $this->getQueryParameter('endless_parameter');
+    $arguments = $this->getQueryParameter();
+//    $arguments = $this->getQueryParameter('endless_parameter');
 
 
     $arguments = preg_replace('|^\/|', '', $arguments);
@@ -39,12 +42,12 @@ class EndlessController extends ControllerBase {
   }
 
   /**
-   * @param string $parameter
-   *    The name of parameter in current request's query.
+   * Get value of 'endless parameter from current query.
+   *
    * @return mixed
    *    Returns string with endless number of arguments.
    */
-  private function getQueryParameter($parameter) {
+  private function getQueryParameter() {
 
     $query = \Drupal::request()->query;
     $parameter = $query->get('endless_parameter');

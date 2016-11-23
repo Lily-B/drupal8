@@ -11,23 +11,20 @@ use Symfony\Component\HttpFoundation\Request;
  * As the route system does not allow arbitrary amount of parameters convert
  * the file path to a query parameter on the request.
  */
-class PathProcessorEndless implements InboundPathProcessorInterface {
+class EndlessPathProcessor implements InboundPathProcessorInterface {
 
   /**
    * {@inheritdoc}
    */
   public function processInbound($path, Request $request) {
 
-//    if (strpos($path, '/endless/') === 0 && !$request->query->has('endless_parameter')) {
-    if (strpos($path, '/endless') === 0) {
-
+    if (strpos($path, '/endless/') === 0 && !$request->query->has('endless_parameter')) {
 
       $endless_arg = preg_replace('|^\/endless|', '', $path);
       $request->query->set('endless_parameter', $endless_arg);
 
-
+//      kint($request);exit();
       $result = '/endless';
-//kint($request);exit();
       return $result;
     }
 

@@ -1,0 +1,5 @@
+name: 'Post'
+type: 'module'
+core: '8.x'
+description: 'A module for training sending custom Guzzle HTTP client requests.'
+package: 'Custom'

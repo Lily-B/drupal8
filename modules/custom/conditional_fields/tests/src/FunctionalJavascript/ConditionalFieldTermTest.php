@@ -31,30 +31,17 @@ class ConditionalFieldTermTest extends JavascriptTestBase {
   protected $termsCount;
 
   /**
-   * The name of a field to be created for testing.
-   *
-   * @var string
-   */
-  protected $fieldName;
-
-  /**
-   * Tests creating Conditional Field.
-   *
-   * Condition: Visible if value = the 1-st term of custom vocabulary.
+   * Tests creating Conditional Field: Visible if has value from taxonomy.
    */
   public function testCreateConfig() {
-    $admin_account = $this->drupalCreateUser([
+    $user = $this->drupalCreateUser([
+      'administer nodes',
       'view conditional fields',
       'edit conditional fields',
       'delete conditional fields',
-      'administer nodes',
-      'administer node fields',
-      'administer node form display',
       'create article content',
-      'edit any article content',
-      'administer taxonomy',
     ]);
-    $this->drupalLogin($admin_account);
+    $this->drupalLogin($user);
 
     // Visit a ConditionalFields configuration page that requires login.
     $this->drupalGet('admin/structure/conditional_fields');
@@ -74,14 +61,13 @@ class ConditionalFieldTermTest extends JavascriptTestBase {
     $this->drupalGet('admin/structure/conditional_fields/node/article');
     $this->assertSession()->statusCodeEquals(200);
 
-    // Add a new field condition.
-    $dependency = [
+    $edit = [
       'table[add_new_dependency][dependent]' => 'body',
-      'table[add_new_dependency][dependee]' => $this->fieldName,
+      'table[add_new_dependency][dependee]' => 'field_' . $this->taxonomyName,
       'table[add_new_dependency][state]' => 'visible',
       'table[add_new_dependency][condition]' => 'value',
     ];
-    $this->submitForm($dependency, 'Add dependency');
+    $this->submitForm($edit, 'Add dependency');
     $this->assertSession()->statusCodeEquals(200);
 
     // Change a condition's values set and the value.
@@ -99,7 +85,7 @@ class ConditionalFieldTermTest extends JavascriptTestBase {
     $this->assertSession()
       ->pageTextContains('body field_' . $this->taxonomyName . ' visible value');
 
-    // Check if the field condition works.
+    // Visit Article Add form to check that conditions are applied.
     $this->drupalGet('node/add/article');
     $this->assertSession()->statusCodeEquals(200);
 
@@ -108,11 +94,11 @@ class ConditionalFieldTermTest extends JavascriptTestBase {
     // Change a select value set to show the body.
     $this->changeSelect('#edit-field-' . $this->taxonomyName . '-' . $term_id, $term_id);
     $this->waitUntilVisible('.field--name-body', 50, 'Article Body field is not visible');
-    $this->createScreenshot('/var/www/drupal8.local/sites/simpletest/scr1BodyVis.jpg');
+//    $this->createScreenshot('sites/simpletest/scr1BodyVis.jpg');
     // Change a select value set to hide the body again.
     $this->changeSelect('#edit-field-' . $this->taxonomyName . '-' . $term_id);
     $this->waitUntilHidden('.field--name-body', 50, 'Article Body field is visible');
-    $this->createScreenshot('/var/www/drupal8.local/sites/simpletest/scr2BodyHid.jpg');
+//    $this->createScreenshot('sites/simpletest/scr2BodyHid.jpg');
   }
 
   /**
@@ -141,13 +127,12 @@ class ConditionalFieldTermTest extends JavascriptTestBase {
     // The field label is a machine name of created vocabulary.
     $handler_settings = [
       'target_bundles' => [
-        $this->taxonomyName,
+        $vocabulary->id() => $vocabulary->id(),
       ],
     ];
-    $this->fieldName = 'field_' . $this->taxonomyName;
-    $this->createEntityReferenceField('node', 'article', $this->fieldName, $this->taxonomyName, 'taxonomy_term', 'default', $handler_settings);
+    $this->createEntityReferenceField('node', 'article', 'field_' . $this->taxonomyName, $this->taxonomyName, 'taxonomy_term', 'default', $handler_settings);
     entity_get_form_display('node', 'article', 'default')
-      ->setComponent($this->fieldName, ['type' => 'options_buttons'])
+      ->setComponent('field_' . $this->taxonomyName, ['type' => 'options_buttons'])
       ->save();
   }
 
